@@ -16,5 +16,11 @@ namespace InventoryManagementSystem.Models
         [DisplayName("Price : ")]
         [Required]
         public decimal Price { get; set; }
+        
+        [Display(Name = "Chosse the product image ")]
+        [Required]
+        public IFormFile Image { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }
