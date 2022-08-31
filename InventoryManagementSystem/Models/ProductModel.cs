@@ -21,7 +21,7 @@ namespace InventoryManagementSystem.Models
         [Display(Name = "Chosse the product image ")]
         [NotMapped]
         
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
         public string? ImageUrl { get; set; }
     }
 }

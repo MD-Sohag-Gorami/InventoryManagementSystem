@@ -9,6 +9,6 @@ namespace InventoryManagementSystem.Services
         ProductModel GetProductById(int id);
         void UpdateProduct(ProductModel product);
         void InsertProduct(ProductModel product);
-        ProductModel DetailProduct(ProductModel product);
+       
     }
 }

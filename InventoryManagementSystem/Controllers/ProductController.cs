@@ -21,6 +21,7 @@ namespace InventoryManagementSystem.Controllers
         public IActionResult Index()
         {
             var products = _productService.GetAllProducts();
+            if (products == null) return View("~/Home/ProductNotFound.cshtml");
             return View(products);
         }
         #endregion
@@ -91,7 +92,7 @@ namespace InventoryManagementSystem.Controllers
         {
             if (id == null || id == 0)
             {
-                return NotFound();
+                return View("~/Home/Product/ProductNotFound.cshtml");
             }
             _productService.DeleteProduct(id.Value);
 
@@ -114,7 +115,13 @@ namespace InventoryManagementSystem.Controllers
         }
         #endregion
 
+        #region NotFound
 
+        public IActionResult ProductNotFound()
+        {
+            return View();
+        }
+        #endregion
 
     }
 }
