@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InventoryManagementSystem.Models
 {
@@ -18,9 +19,9 @@ namespace InventoryManagementSystem.Models
         public decimal Price { get; set; }
         
         [Display(Name = "Chosse the product image ")]
-        [Required]
+        [NotMapped]
+        
         public IFormFile Image { get; set; }
-
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

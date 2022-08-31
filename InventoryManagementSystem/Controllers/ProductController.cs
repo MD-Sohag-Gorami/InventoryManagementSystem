@@ -9,10 +9,11 @@ namespace InventoryManagementSystem.Controllers
     {
         #region Ctor
         private readonly IProductService _productService;
-
+        
         public ProductController(IProductService productService)
         {
             _productService = productService;
+           
         }
         #endregion
 
@@ -35,9 +36,9 @@ namespace InventoryManagementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 _productService.InsertProduct(product);
                 return RedirectToAction("Index");
-
             }
 
             return View(product);

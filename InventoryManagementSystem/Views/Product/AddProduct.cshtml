@@ -25,12 +25,7 @@
 
 		<div class="mb-3">
 			<label asp-for="Image"></label>
-			
-			<div class="custom-file">
-				<input asp-for="Image" class="custom-file-input" id="customFile"/>
-				<label class="custom-file-label" for="customFile">Choose file</label>
-			</div>
-
+			<input asp-for="Image" class="form-control" />
 			<span asp-validation-for="Image" class="text-danger"></span>
 		</div>
 

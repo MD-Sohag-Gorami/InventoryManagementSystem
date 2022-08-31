@@ -6,10 +6,13 @@ namespace InventoryManagementSystem.Services
     public class ProductService : IProductService
     {
         private readonly ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductService(ApplicationDbContext db)
+
+        public ProductService(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
         {
             _db = db;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IList<ProductModel> GetAllProducts()
@@ -43,6 +46,17 @@ namespace InventoryManagementSystem.Services
 
         public void InsertProduct(ProductModel product)
         {
+
+            if (product.Image != null)
+            {
+                string image = "Images/ProImage/";
+                image += Guid.NewGuid().ToString() + " - " + product.Image.FileName;
+                product.ImageUrl = "/" + image;// UI te image show kora jonno / use kore lage
+                //Gide parta same name image solve korar jonno use hocche
+                string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, image);
+                product.Image.CopyTo(new FileStream(serverFolder, FileMode.Create));//save image into folder
+
+            }
             _db.Product.Add(product);
             _db.SaveChanges();
         }
