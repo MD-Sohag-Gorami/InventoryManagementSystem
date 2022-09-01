@@ -12,5 +12,6 @@ namespace InventoryManagementSystem.Data
 
         }
         public DbSet<ProductModel> Product { get; set; }
+        public DbSet<SignUpUserModel> SignUpUser { get; set; }
     }
 }

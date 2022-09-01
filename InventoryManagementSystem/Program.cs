@@ -11,6 +11,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     builder.Configuration.GetConnectionString("DefalutConnection")));
 
 builder.Services.AddScoped<IProductService, ProductService>();
+//builder.Services.AddScoped<IAccountService, AccountService>();
 
 var app = builder.Build();
 
