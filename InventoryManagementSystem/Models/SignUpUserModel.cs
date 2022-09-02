@@ -10,14 +10,14 @@ namespace InventoryManagementSystem.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter a password")]
-        [Compare("ConfirmPassword", ErrorMessage = "Password does not match")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Please confirm a password")]
+        [Required(ErrorMessage = "Please Enter a confirm  password")]
         [Display(Name = "Confirm Password")]
         [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Password does not match")]
         public string ConfirmPassword { get; set; }
 
 

@@ -12,30 +12,28 @@ namespace InventoryManagementSystem.Controllers
         {
             _accountService = accountService;
         }
-        [Route("signup")]
+        [HttpGet]
         public IActionResult Signup()
         {
-            return View();
+            SignUpUserModel model = new SignUpUserModel();
+            return View(model);
         }
-        [Route("Signup")]
+    
         [HttpPost]
         public async Task <IActionResult> Signup(SignUpUserModel userModel)
         {
             if(ModelState.IsValid)
             {
 
-                var result = _accountService.CreateUser(userModel);
+                var result = _accountService.CreateUserAsync(userModel);
                
                 if (result.IsCompletedSuccessfully)
                 {
-                    Console.WriteLine("Asche ");
-                    return View ("Product","Index");
+         
+                    return RedirectToAction ("Index","Product");
                 }
 
                 ModelState.AddModelError("", "Invalid login credendial ");
-
-
-                ModelState.Clear();
                 
             }
             return View(userModel);

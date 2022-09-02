@@ -5,6 +5,6 @@ namespace InventoryManagementSystem.Services
 {
     public interface IAccountService
     {
-        Task <IdentityResult> CreateUser(SignUpUserModel userModel);
+        Task <IdentityResult> CreateUserAsync(SignUpUserModel userModel);
     }
 }

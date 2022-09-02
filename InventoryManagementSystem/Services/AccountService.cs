@@ -12,14 +12,15 @@ namespace InventoryManagementSystem.Services
         {
             _userManager = userManager;
         }
-        public  Task<IdentityResult> CreateUser(SignUpUserModel userModel)
+        public  async Task<IdentityResult> CreateUserAsync(SignUpUserModel userModel)
         {
             var user = new IdentityUser()
             {
                 Email = userModel.Email,
                 UserName = userModel.Email
             };
-           var resutl =  _userManager.CreateAsync(user, userModel.Password);
+            var resutl = await _userManager.CreateAsync(user, userModel.Password);
+
             return resutl;
 
         }
