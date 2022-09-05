@@ -7,22 +7,35 @@ namespace InventoryManagementSystem.Services
     public class AccountService : IAccountService
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AccountService(UserManager<IdentityUser> userManager)
+        public AccountService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
-        public  async Task<IdentityResult> CreateUserAsync(SignUpUserModel userModel)
+        public async Task<IdentityResult> CreateUserAsync(SignUpUserModel viewModel)
         {
             var user = new IdentityUser()
             {
-                Email = userModel.Email,
-                UserName = userModel.Email
+                UserName = viewModel.Email,
+                Email = viewModel.Email
             };
-            var resutl = await _userManager.CreateAsync(user, userModel.Password);
 
-            return resutl;
+            var result = await _userManager.CreateAsync(user, viewModel.Password);
 
+            return result;
+        }
+
+        public async Task<SignInResult> PasswordSignInAsyn(SignInModel signInModel)
+        {
+            var result = await _signInManager.PasswordSignInAsync(signInModel.Email, signInModel.Password, signInModel.RememberMe, false);
+            return result;
+        }
+
+        public async Task SignOutAsync()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }

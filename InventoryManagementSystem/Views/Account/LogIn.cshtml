@@ -1,9 +1,14 @@
-﻿@model InventoryManagementSystem.Models.SignUpUserModel
+﻿@model InventoryManagementSystem.Models.SignInModel
 
-<h1>SignUp</h1>
+@{
+    ViewData["Title"] = "Login";
+}
 
+<h1>Login</h1>
 <hr />
-        <form asp-action="SignUp">
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
@@ -15,21 +20,19 @@
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="RememberMe" /> @Html.DisplayNameFor(model => model.RememberMe)
+                </label>
+            </div>
             <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                <input type="submit" value="LogIn" class="btn btn-primary" />
             </div>
-            <br />
-            <div>
-                  <input type="submit" value="SignUp" />
-            </div>
-
         </form>
-
-        <br />
-<div>
-    <p>Click  <a asp-action="LogIn" asp-controller="Account"> here  </a> to LogIn </p>
+    </div>
 </div>
 
+<div>
+    <p>Click  <a asp-action="SignUp" asp-controller="Account"> here  </a> to SignUp </p>
+</div>
 
