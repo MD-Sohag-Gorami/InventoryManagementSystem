@@ -4,7 +4,7 @@
 
 namespace InventoryManagementSystem.Migrations
 {
-    public partial class creaesignuptable : Migration
+    public partial class createapplicationuser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
