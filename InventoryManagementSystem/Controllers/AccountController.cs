@@ -31,7 +31,7 @@ namespace InventoryManagementSystem.Controllers
                 if (result.Succeeded)
                 {
          
-                    return RedirectToAction ("Index","Product");
+                    return RedirectToAction ("LogIn","Account");
                 }
 
                 ModelState.AddModelError("", "Invalid login credendial ");
@@ -42,7 +42,7 @@ namespace InventoryManagementSystem.Controllers
         }
 
         [Route("login")]
-        public IActionResult Login()
+        public IActionResult LogIn()
         {
             return View();  
         }
@@ -65,8 +65,9 @@ namespace InventoryManagementSystem.Controllers
             return View(signInModel);
         }
 
+      
         [Route("logout")]
-        [HttpPost]
+        //[HttpPost]
         public async Task<IActionResult> LogOut()
         {
             await _accountService.SignOutAsync();

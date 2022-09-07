@@ -7,7 +7,7 @@
 
 @*<button type="submit"><a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="AddProduct">Add Product</a></button>*@
 
-<table class="table table-bordered table-striped" styel="width:100%">
+<table class="ProductTable" styel="width:100%">
     <thead>
         <tr>
             <th>
@@ -39,7 +39,6 @@
                 </td>
                  <td >
                   <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id"> Edit </a>
-
                 </td>
                 <td >
                   <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id"> Delete </a>
@@ -47,7 +46,6 @@
                 </td>
                  <td >
                   <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id"> Details </a>
-
                 </td>
             </tr>
             }
