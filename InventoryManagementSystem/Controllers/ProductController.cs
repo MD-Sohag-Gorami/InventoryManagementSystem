@@ -17,7 +17,8 @@ namespace InventoryManagementSystem.Controllers
         }
         #endregion
 
-        #region Product Index Section
+        #region Method
+        #region Product Index Method
         public IActionResult Index()
         {
             var products = _productService.GetAllProducts();
@@ -26,7 +27,7 @@ namespace InventoryManagementSystem.Controllers
         }
         #endregion
 
-        #region Product Add Section
+        #region Product Add Method
         //get
         public IActionResult AddProduct()
         {
@@ -46,7 +47,7 @@ namespace InventoryManagementSystem.Controllers
         }
         #endregion
 
-        #region Product Edit Section
+        #region Product Edit Method
         //GET
         public IActionResult Edit(int? id)
         {
@@ -75,7 +76,7 @@ namespace InventoryManagementSystem.Controllers
         }
         #endregion
 
-        #region Product Delete Section with out using serives 
+        #region Product Delete Method with out using serives 
         /* public IActionResult Delete(int? id)
          {
              var deleteProduct = _db.Product.Find(id);
@@ -87,7 +88,7 @@ namespace InventoryManagementSystem.Controllers
 
         #endregion
 
-        #region Prodcut Delete Section
+        #region Prodcut Delete Method
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
@@ -100,7 +101,7 @@ namespace InventoryManagementSystem.Controllers
         }
         #endregion
 
-        #region Product details
+        #region Product details Method
         public IActionResult Detail(int? id)
         {
             if (id == null || id == 0)
@@ -115,12 +116,14 @@ namespace InventoryManagementSystem.Controllers
         }
         #endregion
 
-        #region NotFound
+        #region NotFound Method
 
         public IActionResult ProductNotFound()
         {
             return View();
         }
+        #endregion
+
         #endregion
 
     }

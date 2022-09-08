@@ -1,6 +1,7 @@
 ﻿using InventoryManagementSystem.Data;
 using InventoryManagementSystem.Models;
 
+
 namespace InventoryManagementSystem.Services
 {
     public class ProductService : IProductService
@@ -8,13 +9,17 @@ namespace InventoryManagementSystem.Services
         #region Ctor
         private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public ProductService(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
+      
+
+        public ProductService(ApplicationDbContext db,
+                              IWebHostEnvironment webHostEnvironment )
         {
             _db = db;
             _webHostEnvironment = webHostEnvironment;
+          
         }
         #endregion
-
+        #region Method
         #region GetAllProduct
         public IList<ProductModel> GetAllProducts()
         {
@@ -28,6 +33,7 @@ namespace InventoryManagementSystem.Services
         public ProductModel GetProductById(int id)
         {
             var product = _db.Product.Find(id);
+          
             if (product == null)
             {
                 return new ProductModel();
@@ -57,6 +63,15 @@ namespace InventoryManagementSystem.Services
         public void DeleteProduct(int id)
         {
             var product = GetProductById(id);
+
+            var filePath = product.ImageUrl;
+            filePath = filePath.Substring(1);
+            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, filePath);
+            if (File.Exists(serverFolder))
+            {
+                File.Delete(serverFolder);
+            }
+
             _db.Product.Remove(product);
             _db.SaveChanges();
         }
@@ -70,7 +85,7 @@ namespace InventoryManagementSystem.Services
             {
                 string image = "Images/ProImage/";
                 image += Guid.NewGuid().ToString() + " - " + product.Image.FileName;
-
+                
                 product.ImageUrl = "/" + image;
               
                 string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, image);
@@ -81,7 +96,8 @@ namespace InventoryManagementSystem.Services
             _db.SaveChanges();
         }
         #endregion
+        #endregion 
 
-      
+
     }
 }

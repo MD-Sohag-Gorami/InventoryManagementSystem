@@ -18,7 +18,7 @@ namespace InventoryManagementSystem.Models
         [Required]
         public decimal Price { get; set; }
         
-        [Display(Name = "Chosse the product image ")]
+        [Display(Name = "Choose the product image ")]
         [NotMapped]
         
         public IFormFile? Image { get; set; }

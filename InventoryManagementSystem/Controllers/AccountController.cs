@@ -6,11 +6,17 @@ namespace InventoryManagementSystem.Controllers
 {
     public class AccountController : Controller
     {
+        #region Ctor
         private readonly IAccountService _accountService;
         public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
         }
+        #endregion
+
+        #region Method
+
+        #region Singup Method
         [Route("signup")]
         [HttpGet]
         public IActionResult SignUp()
@@ -40,6 +46,8 @@ namespace InventoryManagementSystem.Controllers
             return View(userModel);
 
         }
+        #endregion
+        #region Login Method
 
         [Route("login")]
         public IActionResult LogIn()
@@ -64,8 +72,10 @@ namespace InventoryManagementSystem.Controllers
 
             return View(signInModel);
         }
+        #endregion
+        #region Logout Method
 
-      
+
         [Route("logout")]
         //[HttpPost]
         public async Task<IActionResult> LogOut()
@@ -73,6 +83,8 @@ namespace InventoryManagementSystem.Controllers
             await _accountService.SignOutAsync();
             return RedirectToAction("Index","Home");
         }
-             
+        #endregion
+
     }
+    #endregion
 }
