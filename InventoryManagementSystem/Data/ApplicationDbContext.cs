@@ -13,6 +13,7 @@ namespace InventoryManagementSystem.Data
 
         }
         public DbSet<ProductModel> Product { get; set; }
-       
+        public DbSet<TestModel> Test { get; set; }
+
     }
 }

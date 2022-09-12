@@ -23,5 +23,12 @@ namespace InventoryManagementSystem.Models
         
         public IFormFile? Image { get; set; }
         public string? ImageUrl { get; set; }
+
+        [NotMapped]
+        public IFormFile? Image2 { get; set; }
+
+        public string? ByteImage { get; set; }
+
+        public int Test { get; set; }
     }
 }
