@@ -23,5 +23,7 @@ namespace InventoryManagementSystem.Models
         
         public IFormFile? Image { get; set; }
         public string? ImageUrl { get; set; }
+
+        public int ? Qnty { get; set; }
     }
 }

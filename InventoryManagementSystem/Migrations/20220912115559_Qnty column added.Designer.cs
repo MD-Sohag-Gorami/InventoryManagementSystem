@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventoryManagementSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220902134806_newItemAdded")]
-    partial class newItemAdded
+    [Migration("20220912115559_Qnty column added")]
+    partial class Qntycolumnadded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,6 +45,9 @@ namespace InventoryManagementSystem.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("Qnty")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

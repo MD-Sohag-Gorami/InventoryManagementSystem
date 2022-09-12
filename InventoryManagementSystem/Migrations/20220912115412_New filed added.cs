@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InventoryManagementSystem.Migrations
 {
-    public partial class init : Migration
+    public partial class Newfiledadded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

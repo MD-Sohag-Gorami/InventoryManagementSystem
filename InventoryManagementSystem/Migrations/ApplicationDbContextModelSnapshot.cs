@@ -44,6 +44,9 @@ namespace InventoryManagementSystem.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("Qnty")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Product");

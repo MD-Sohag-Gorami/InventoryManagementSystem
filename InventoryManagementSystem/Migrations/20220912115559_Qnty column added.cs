@@ -4,22 +4,21 @@
 
 namespace InventoryManagementSystem.Migrations
 {
-    public partial class createnewfield : Migration
+    public partial class Qntycolumnadded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "ImageUrl",
+            migrationBuilder.AddColumn<int>(
+                name: "Qnty",
                 table: "Product",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+                type: "int",
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ImageUrl",
+                name: "Qnty",
                 table: "Product");
         }
     }
