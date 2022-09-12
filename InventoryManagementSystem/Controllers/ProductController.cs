@@ -7,7 +7,7 @@ namespace InventoryManagementSystem.Controllers
 {
     public class ProductController : Controller
     {
-        #region Ctor
+        #region CTor
         private readonly IProductService _productService;
         
         public ProductController(IProductService productService)

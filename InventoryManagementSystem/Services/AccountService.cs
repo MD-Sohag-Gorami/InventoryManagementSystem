@@ -6,6 +6,7 @@ namespace InventoryManagementSystem.Services
 {
     public class AccountService : IAccountService
     {
+        #region CTor
         private readonly UserManager<IdentityUser> _userManager;
 
         public AccountService(UserManager<IdentityUser> userManager)

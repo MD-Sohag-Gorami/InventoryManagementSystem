@@ -5,7 +5,7 @@ namespace InventoryManagementSystem.Services
 {
     public class ProductService : IProductService
     {
-        #region Ctor
+        #region CTor
         private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
         public ProductService(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
@@ -14,7 +14,7 @@ namespace InventoryManagementSystem.Services
             _webHostEnvironment = webHostEnvironment;
         }
         #endregion
-
+        #region Methods
         #region GetAllProduct
         public IList<ProductModel> GetAllProducts()
         {
