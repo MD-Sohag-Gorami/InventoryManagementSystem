@@ -13,7 +13,6 @@ namespace InventoryManagementSystem.Controllers
         public ProductController(IProductService productService)
         {
             _productService = productService;
-           
         }
         #endregion
 

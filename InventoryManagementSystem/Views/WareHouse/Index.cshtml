@@ -1,0 +1,55 @@
+﻿
+@model  List<WareHouseViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@*<button type="submit"><a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="AddProduct">Add Product</a></button>*@
+
+<table class="ProductTable" styel="width:100%">
+    <thead>
+        <tr>
+            <th>
+                WareHouse Name
+            </th>
+            <th>
+                WareHouse Location
+            </th>
+            <th>
+                WareHouse Img
+            </th>
+            <th>
+                Edit
+            </th>
+            <th>
+               Delete
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var wareHouse in Model)
+        {
+            <tr>
+                <td width="20%">
+                    @wareHouse.Name
+                </td>
+                <td width="20%">
+                    @wareHouse.Location
+                </td>
+                <td width="40%">
+                     <img src="@wareHouse.ImgByteUrl" height="30" width="30">
+                </td>
+                 <td >
+                  <a asp-controller="WareHouse" asp-action="Edit" asp-route-id="@wareHouse.Id"> Edit </a>
+                </td>
+                <td >
+                  <a asp-controller="WareHouse" asp-action="Delete" asp-route-id="@wareHouse.Id"> Delete </a>
+
+                </td>
+                
+            </tr>
+            }
+    </tbody>
+</table>
+

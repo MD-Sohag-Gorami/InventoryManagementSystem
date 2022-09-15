@@ -26,6 +26,8 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IWareHouseService, WareHouseService>();
+
 
 var app = builder.Build();
 
