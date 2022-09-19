@@ -1,4 +1,5 @@
 using InventoryManagementSystem.Data;
+using InventoryManagementSystem.Factories;
 using InventoryManagementSystem.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,10 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IWareHouseService, WareHouseService>();
+builder.Services.AddScoped<IProductModelFactory, ProductModelFactory>();
+builder.Services.AddScoped<IWarehouseModelFactory, WarehouseModelFactory>();
+
+
 
 
 var app = builder.Build();

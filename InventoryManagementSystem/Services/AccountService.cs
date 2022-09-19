@@ -1,4 +1,4 @@
-﻿using InventoryManagementSystem.Models;
+﻿using InventoryManagementSystem.ViewModel;
 using Microsoft.AspNetCore.Identity;
 
 

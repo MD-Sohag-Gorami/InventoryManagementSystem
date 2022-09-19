@@ -8,21 +8,17 @@ namespace InventoryManagementSystem.Models
     {
         [Key]
         public  int Id { get; set; }
-        [DisplayName("Name : ")]
-        [Required]
         public string Name { get; set; }
-        [DisplayName("Discription : ")]
-        [Required]
         public string Description { get; set; }
-        [DisplayName("Price : ")]
-        [Required]
-        public decimal Price { get; set; }
-        
-        [Display(Name = "Choose the product image ")]
-        [NotMapped]
-        
-        public IFormFile? Image { get; set; }
+        public decimal PurchasePrice { get; set; }
+        public decimal SellPrice { get; set; }
+        public int ProductQnty { get; set; }
         public string? ImageUrl { get; set; }
+        public DateTime  CreateDateOn { get; set; }
+        public int WareHouseId { get; set; }
+        public virtual WareHouseModel? WareHouseModel { get; set; }
+       
+       
 
     }
 }

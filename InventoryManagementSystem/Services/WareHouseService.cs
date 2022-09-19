@@ -17,57 +17,17 @@ namespace InventoryManagementSystem.Services
         }
         #endregion
         #region Methods
-        public async Task<List<WareHouseViewModel>> GetAllWareHouseAsync()
+        public async Task<List<WareHouseModel>> GetAllWareHouseAsync()
         {
             var model = await _db.WareHouse.ToListAsync();
-
-            List<WareHouseViewModel> wareHouses = new List<WareHouseViewModel>();
-            foreach (var item in model)
-            {
-                string byteImage = null;
-                string byteImageData = null;
-                if (item.ImgByte != null)
-                {
-                     byteImage = Convert.ToBase64String(item.ImgByte);
-                     byteImageData = String.Format("data:image/gif;base64,{0}", byteImage);
-                }
-
-                WareHouseViewModel ViewModel = new WareHouseViewModel()
-                { Id = item.Id,
-                  ImgByteUrl = byteImageData,
-                  ImgByte = null,
-                  Name = item.Name,
-                  Location = item.Location,
-
-                };
-                wareHouses.Add(ViewModel);
-            }
-            if (wareHouses == null) return new List<WareHouseViewModel> ();
-            return wareHouses;
+            if (model == null) return new List<WareHouseModel> ();
+            return model;
         }
-        public async Task<WareHouseViewModel> GetWareHouseByIdAsync(int? id)
+        public async Task<WareHouseModel> GetWareHouseByIdAsync(int? id)
         {
-            var model = await _db.WareHouse.FindAsync(id.Value);
-
-            string byteImage = null;
-            string byteImageData = null;
-            if (model.ImgByte != null)
-            {
-                byteImage = Convert.ToBase64String(model.ImgByte);
-                byteImageData = String.Format("data:image/gif;base64,{0}", byteImage);
-            }
-
-            WareHouseViewModel ViewModel = new WareHouseViewModel()
-            {
-                Id = model.Id,
-                ImgByteUrl = byteImageData,
-                ImgByte = null,
-                Name = model.Name,
-                Location = model.Location,
-
-            };
-
-            return ViewModel;
+            var model = await _db.WareHouse.FindAsync(id);
+            if (model == null) return new WareHouseModel();
+            return model;
         }
         public async Task UpdateWareHouseAsync(WareHouseViewModel viewModel)
         {
@@ -88,7 +48,6 @@ namespace InventoryManagementSystem.Services
             await _db.SaveChangesAsync();
 
         }
-
         public async Task InsertWareHouseAsync(WareHouseViewModel viewModel)
         {
             WareHouseModel wareHouse = new WareHouseModel();

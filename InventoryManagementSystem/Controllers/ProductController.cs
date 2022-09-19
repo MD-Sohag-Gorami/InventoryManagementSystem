@@ -1,6 +1,8 @@
 ﻿using InventoryManagementSystem.Data;
+using InventoryManagementSystem.Factories;
 using InventoryManagementSystem.Models;
 using InventoryManagementSystem.Services;
+using InventoryManagementSystem.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagementSystem.Controllers
@@ -9,73 +11,69 @@ namespace InventoryManagementSystem.Controllers
     {
         #region Ctor
         private readonly IProductService _productService;
-        
-        public ProductController(IProductService productService)
+        private readonly IProductModelFactory _productModelFactory;
+
+       public ProductController(IProductService productService,
+                                 IProductModelFactory productModelFactory)
         {
             _productService = productService;
+            _productModelFactory = productModelFactory;
         }
         #endregion
 
-        #region Method
-        #region Product Index Method
-        public IActionResult Index()
+        #region Methods
+      
+        public async Task <IActionResult> Index()
         {
-            var products = _productService.GetAllProducts();
+            var products =await _productModelFactory.PrepareAllProductsByIdAsync();
             if (products == null) return View("~/Home/ProductNotFound.cshtml");
             return View(products);
         }
-        #endregion
 
-        #region Product Add Method
-        //get
-        public IActionResult AddProduct()
+        [HttpGet]
+        public async Task<IActionResult> AddProduct()
         {
-            return View();
+            var viewModel = await _productModelFactory.PrepareProductViewModelAsync(new ProductViewModel());
+            return View(viewModel);
         }
         [HttpPost]
-        public IActionResult AddProduct(ProductModel product)
+        public async Task <IActionResult> AddProduct(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
-               
-                _productService.InsertProduct(product);
+   
+               await _productService.InsertProductAsync(productViewModel);
                 return RedirectToAction("Index");
             }
 
-            return View(product);
+            return View(productViewModel);
         }
-        #endregion
-
-        #region Product Edit Method
-        //GET
-        public IActionResult Edit(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            var editProduct = _productService.GetProductById(id.Value);
+            var editProduct = await _productModelFactory.PrepareProductByIdAsync(id.Value);
 
             if (editProduct == null) return NotFound();
 
             return View(editProduct);
         }
-        //post
         [HttpPost]
-        public IActionResult Edit(ProductModel product)
+        public async Task<IActionResult> Edit(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
-                _productService.UpdateProduct(product);
+               await _productService.UpdateProductAsync(productViewModel);
                 return RedirectToAction("Index");
 
             }
 
-            return View(product);
+            return View(productViewModel);
         }
-        #endregion
 
-        #region Product Delete Method with out using serives 
         /* public IActionResult Delete(int? id)
          {
              var deleteProduct = _db.Product.Find(id);
@@ -85,45 +83,32 @@ namespace InventoryManagementSystem.Controllers
              return RedirectToAction("Index");
          }*/
 
-        #endregion
-
-        #region Prodcut Delete Method
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0)
             {
                 return View("~/Home/Product/ProductNotFound.cshtml");
             }
-            _productService.DeleteProduct(id.Value);
+           await _productService.DeleteProductAsync(id.Value);
 
             return RedirectToAction("Index");
         }
-        #endregion
-
-        #region Product details Method
-        public IActionResult Detail(int? id)
+     
+        public async Task<IActionResult> Detail(int? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            var detailProduct = _productService.GetProductById(id.Value);
+            var detailProduct = await _productService.GetProductByIdAsync(id.Value);
 
             if (detailProduct == null) return NotFound();
 
             return View(detailProduct);
         }
+        
         #endregion
 
-        #region NotFound Method
-
-        public IActionResult ProductNotFound()
-        {
-            return View();
-        }
-        #endregion
-
-        #endregion
 
     }
 }

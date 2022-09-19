@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<ProductModel>  
+@model IEnumerable<ProductViewModel>  
 
 @{
     ViewData["Title"] = "Index";
@@ -35,7 +35,7 @@
                     @product.Name
                 </td>
                 <td width="30%">
-                    @product.Price
+                    @product.PurchasePrice
                 </td>
                  <td >
                   <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id"> Edit </a>

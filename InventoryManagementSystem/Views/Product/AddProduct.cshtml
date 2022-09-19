@@ -1,4 +1,4 @@
-﻿@model ProductModel
+﻿@model ProductViewModel
 
 <form method="post" enctype="multipart/form-data">
 	<div class="border p-3 mt-4">
@@ -17,15 +17,33 @@
 			<span asp-validation-for="Description" class="text-danger"></span>
 		</div>
 		<div class="mb-3">
-			<label asp-for="Price"></label>
-			<input asp-for="Price" class="form-control" />
-			<span asp-validation-for="Price" class="text-danger"></span>
+			<label asp-for="SellPrice"></label>
+			<input asp-for="SellPrice" class="form-control" />
+			<span asp-validation-for="SellPrice" class="text-danger"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="ProductQnty"></label>
+			<input asp-for="ProductQnty" class="form-control" />
+			<span asp-validation-for="ProductQnty" class="text-danger"></span>
+		</div>
+		
+		<div class="mb-3">
+			<label asp-for="CreateDateOn"></label>
+			<input asp-for="CreateDateOn" class="form-control" />
+			<span asp-validation-for="CreateDateOn" class="text-danger"></span>
 		</div>
 
 		<div class="mb-3">
 			<label asp-for="Image"></label>
 			<input asp-for="Image" class="form-control" />
 			<span asp-validation-for="Image" class="text-danger"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="WareHouseId"></label>
+			<select asp-for="WareHouseId" class="form-control" asp-items="@Model.AvaiableWarehouse"> </select>
+			<span asp-validation-for="WareHouseId" class="text-danger"></span>
 		</div>
 
 		<button type="submit" class="btn btn-primary" style="width:150px">Add Product</button>

@@ -1,6 +1,6 @@
 ﻿using InventoryManagementSystem.Data;
 using InventoryManagementSystem.Models;
-
+using InventoryManagementSystem.ViewModel;
 
 namespace InventoryManagementSystem.Services
 {
@@ -10,7 +10,6 @@ namespace InventoryManagementSystem.Services
         private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
       
-
         public ProductService(ApplicationDbContext db,
                               IWebHostEnvironment webHostEnvironment )
         {
@@ -19,20 +18,16 @@ namespace InventoryManagementSystem.Services
           
         }
         #endregion
-        #region Method
-        #region GetAllProduct
-        public IList<ProductModel> GetAllProducts()
+        #region Methods
+        public async Task<List<ProductModel>> GetAllProductsAsync()
         {
             var products = _db.Product.ToList();
             if(products == null) return new List<ProductModel>();
             return products;
         }
-        #endregion
-
-        #region GerProductById
-        public ProductModel GetProductById(int id)
+        public async Task<ProductModel> GetProductByIdAsync(int id)
         {
-            var product = _db.Product.Find(id);
+            var product = await _db.Product.FindAsync(id);
           
             if (product == null)
             {
@@ -40,29 +35,40 @@ namespace InventoryManagementSystem.Services
             }
             return product;
         }
-        #endregion
-
-        #region Update Product
-
-        public void UpdateProduct(ProductModel product)
+      
+        public async Task UpdateProductAsync(ProductViewModel viewModel)
         {
-            if (product.Image != null)
+
+            var productModel = await _db.Product.FindAsync(viewModel.Id);
+            if (productModel == null) return;
+            productModel.Id = viewModel.Id;
+            productModel.Name = viewModel.Name;
+            productModel.Description = viewModel.Description;
+            productModel.CreateDateOn = viewModel.CreateDateOn;
+            productModel.ProductQnty = viewModel.ProductQnty;
+            productModel.SellPrice = viewModel.SellPrice;
+            productModel.PurchasePrice = viewModel.PurchasePrice;
+            productModel.WareHouseId = viewModel.WareHouseId;
+
+            if (viewModel.Image != null)
             {
                 string image = "Images/ProImage/";
-                image += Guid.NewGuid().ToString() + " - " + product.Image.FileName;
-                product.ImageUrl = "/" + image;
-                string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, image);
-                product.Image.CopyTo(new FileStream(serverFolder, FileMode.Create));
-            }
-            _db.Product.Update(product);
-            _db.SaveChanges();
-        }
-        #endregion
+                image += Guid.NewGuid().ToString() + " - " + viewModel.Image.FileName;
 
-        #region Delete Product
-        public void DeleteProduct(int id)
+                viewModel.ImageUrl = "/" + image;
+
+                string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, image);
+
+                viewModel.Image.CopyTo(new FileStream(serverFolder, FileMode.Create));
+            }
+         
+            _db.Product.Update(productModel);
+            await _db.SaveChangesAsync();
+        }
+     
+        public async Task DeleteProductAsync(int id)
         {
-            var product = GetProductById(id);
+            var product =  await GetProductByIdAsync(id);
 
             var filePath = product.ImageUrl;
             filePath = filePath.Substring(1);
@@ -73,30 +79,42 @@ namespace InventoryManagementSystem.Services
             }
 
             _db.Product.Remove(product);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
-        #endregion
-
-        #region Add Product
-        public void InsertProduct(ProductModel product)
+      
+        public async Task InsertProductAsync(ProductViewModel viewModel)
         {
 
-            if (product.Image != null)
+            ProductModel productModel = new ProductModel();
+            productModel.Id = viewModel.Id;
+            productModel.Name = viewModel.Name;
+            productModel.Description = viewModel.Description;
+            productModel.CreateDateOn = viewModel.CreateDateOn;
+            productModel.ProductQnty = viewModel.ProductQnty;
+            productModel.SellPrice = viewModel.SellPrice;
+            productModel.PurchasePrice = viewModel.PurchasePrice;
+            productModel.WareHouseId = viewModel.WareHouseId;
+            if (viewModel.Image != null)
             {
                 string image = "Images/ProImage/";
-                image += Guid.NewGuid().ToString() + " - " + product.Image.FileName;
-                
-                product.ImageUrl = "/" + image;
+                image += Guid.NewGuid().ToString() + " - " + viewModel.Image.FileName;
+
+                viewModel.ImageUrl = "/" + image;
               
                 string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, image);
 
-                product.Image.CopyTo(new FileStream(serverFolder, FileMode.Create));
+                viewModel.Image.CopyTo(new FileStream(serverFolder, FileMode.Create));
             }
-            _db.Product.Add(product);
-            _db.SaveChanges();
+            await _db.Product.AddAsync(productModel);
+            await _db.SaveChangesAsync();
         }
+
+        public Task InsertProductAsync(ProductModel product)
+        {
+            throw new NotImplementedException();
+        }
+     
         #endregion
-        #endregion 
 
 
     }
