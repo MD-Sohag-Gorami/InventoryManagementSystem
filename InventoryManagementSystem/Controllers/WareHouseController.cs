@@ -19,12 +19,18 @@ namespace InventoryManagementSystem.Controllers
         }
         #endregion
         #region Methods
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pg = 1)
         {
-            var wareHouse = await _warehouseModelFactory.PrepareAllWareHoueAsync();
-            if (wareHouse == null) View("~/Home/ProductNotFound.cshtml");
+            var wareHouses = await _warehouseModelFactory.PrepareAllWareHoueAsync();
+            const int pageSize = 2;
+            if (pg < 1) pg = 1;
+            int recsCount = wareHouses.Count;
+            var pager = new Pager(recsCount, pg, pageSize);
+            int recSkip = (pg - 1) * pageSize;
+            var data = wareHouses.Skip(recSkip).Take(pager.PageSize).ToList();
+            this.ViewBag.Pager = pager;
 
-            return View(wareHouse);
+            return View(data);
         }
 
         [HttpGet]
@@ -41,6 +47,7 @@ namespace InventoryManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                await _wareHouseService.InsertWareHouseAsync(wareHouseViewModel);
+
                 return RedirectToAction("Index");
             }
             return View(wareHouseViewModel);
@@ -73,7 +80,6 @@ namespace InventoryManagementSystem.Controllers
             return RedirectToAction("Index");
 
         }
-
 
 
         #endregion

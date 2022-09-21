@@ -16,7 +16,6 @@ namespace InventoryManagementSystem.Controllers
 
         #region Method
 
-        #region Singup Method
         [Route("signup")]
         [HttpGet]
         public IActionResult SignUp()
@@ -46,8 +45,7 @@ namespace InventoryManagementSystem.Controllers
             return View(userModel);
 
         }
-        #endregion
-        #region Login Method
+       
 
         [Route("login")]
         public IActionResult LogIn()
@@ -72,8 +70,7 @@ namespace InventoryManagementSystem.Controllers
 
             return View(signInModel);
         }
-        #endregion
-        #region Logout Method
+       
 
 
         [Route("logout")]
@@ -83,8 +80,7 @@ namespace InventoryManagementSystem.Controllers
             await _accountService.SignOutAsync();
             return RedirectToAction("Index","Home");
         }
-        #endregion
 
     }
-    #endregion
+#endregion
 }

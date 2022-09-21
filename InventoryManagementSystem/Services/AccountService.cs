@@ -9,7 +9,6 @@ namespace InventoryManagementSystem.Services
         #region Ctor
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-
         public AccountService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
@@ -17,7 +16,7 @@ namespace InventoryManagementSystem.Services
         }
         #endregion
         #region Method
-        #region Create User
+    
         public async Task<IdentityResult> CreateUserAsync(SignUpUserModel viewModel)
         {
             var user = new IdentityUser()
@@ -30,22 +29,20 @@ namespace InventoryManagementSystem.Services
 
             return result;
         }
-        #endregion
-        #region Signin Method
+       
 
         public async Task<SignInResult> PasswordSignInAsyn(SignInModel signInModel)
         {
             var result = await _signInManager.PasswordSignInAsync(signInModel.Email, signInModel.Password, signInModel.RememberMe, false);
             return result;
         }
-        #endregion
-        #region Signout Method
+      
 
         public async Task SignOutAsync()
         {
             await _signInManager.SignOutAsync();
         }
-        #endregion
+       
         #endregion
     }
 }

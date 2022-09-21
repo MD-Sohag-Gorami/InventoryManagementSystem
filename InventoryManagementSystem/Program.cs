@@ -31,9 +31,6 @@ builder.Services.AddScoped<IWareHouseService, WareHouseService>();
 builder.Services.AddScoped<IProductModelFactory, ProductModelFactory>();
 builder.Services.AddScoped<IWarehouseModelFactory, WarehouseModelFactory>();
 
-
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

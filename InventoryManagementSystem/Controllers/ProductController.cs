@@ -23,11 +23,21 @@ namespace InventoryManagementSystem.Controllers
 
         #region Methods
       
-        public async Task <IActionResult> Index()
+        public async Task <IActionResult> Index(int pg = 1, string productSearch = "")
         {
-            var products =await _productModelFactory.PrepareAllProductsByIdAsync();
-            if (products == null) return View("~/Home/ProductNotFound.cshtml");
-            return View(products);
+            var products = await _productModelFactory.PrepareAllProductsAsync(productSearch);
+
+            const int pageSize = 5;
+            if (pg < 1) pg = 1;
+            int recsCount = products.Count;
+            var pager = new Pager(recsCount, pg, pageSize);
+            int recSkip = (pg - 1) * pageSize;
+            var data = products.Skip(recSkip).Take(pager.PageSize).ToList();
+            this.ViewBag.Pager = pager;
+
+            return View(data); 
+
+           // return View(products);
         }
 
         [HttpGet]

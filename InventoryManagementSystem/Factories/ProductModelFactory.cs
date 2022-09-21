@@ -38,26 +38,14 @@ namespace InventoryManagementSystem.Factories
             return viewModel;
         }
 
-        public async Task< List<ProductViewModel> > PrepareAllProductsByIdAsync()
+        public async Task< List<ProductViewModel> > PrepareAllProductsAsync(string productSearch="")
         {
-            var products = await _productService.GetAllProductsAsync();
+            var products = await _productService.GetAllProductsAsync(productSearch);
 
             List<ProductViewModel> productList = new List<ProductViewModel>();
 
             foreach (var product in products)
             {
-
-                /*if (product.ImageUrl != null)
-                {
-                    string image = "Images/ProImage/";
-                    image += Guid.NewGuid().ToString() + " - " + product.ImageUrl.FileName;
-
-                    viewModel.ImageUrl = "/" + image;
-
-                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, image);
-
-                    viewModel.Image.CopyTo(new FileStream(serverFolder, FileMode.Create));
-                }*/
 
                 ProductViewModel ViewModel = new ProductViewModel()
                 {

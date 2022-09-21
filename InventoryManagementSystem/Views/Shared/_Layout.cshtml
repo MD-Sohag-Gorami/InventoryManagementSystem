@@ -42,6 +42,14 @@
                         <a asp-area="" asp-controller="Account" asp-action="LogOut">Logout</a>
                     </div>
 
+                    
+                     <div>
+                    <a asp-controller="WareHouse" asp-action="AddWareHouse">Add WareHouse</a>
+                    </div>
+                    <div>
+                        <a asp-controller="WareHouse" asp-action="Index">All WareHouse</a>
+                    </div>
+
                 }
                 else
                 {
@@ -51,14 +59,10 @@
                     <div>
                         <a asp-area="" asp-controller="Account" asp-action="LogIn">Login</a>
                     </div>
+
                 }
                 
-                <div>
-                    <a asp-controller="WareHouse" asp-action="AddWareHouse">Add WareHouse</a>
-                </div>
-                <div>
-                    <a asp-controller="WareHouse" asp-action="Index">All WareHouse</a>
-                </div>
+               
         </div>
         
     </header>

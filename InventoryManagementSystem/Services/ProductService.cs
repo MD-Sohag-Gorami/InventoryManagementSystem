@@ -1,6 +1,7 @@
 ﻿using InventoryManagementSystem.Data;
 using InventoryManagementSystem.Models;
 using InventoryManagementSystem.ViewModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagementSystem.Services
 {
@@ -19,10 +20,16 @@ namespace InventoryManagementSystem.Services
         }
         #endregion
         #region Methods
-        public async Task<List<ProductModel>> GetAllProductsAsync()
+        public async Task<List<ProductModel>> GetAllProductsAsync(string productSearch = "")
         {
             var products = _db.Product.ToList();
-            if(products == null) return new List<ProductModel>();
+            if (products == null) return new List<ProductModel>();
+
+            if (!String.IsNullOrEmpty(productSearch))
+            {
+                products = products.Where(product => product.Name.Contains(productSearch)).ToList();
+            }
+
             return products;
         }
         public async Task<ProductModel> GetProductByIdAsync(int id)
@@ -109,11 +116,6 @@ namespace InventoryManagementSystem.Services
             await _db.SaveChangesAsync();
         }
 
-        public Task InsertProductAsync(ProductModel product)
-        {
-            throw new NotImplementedException();
-        }
-     
         #endregion
 
 
