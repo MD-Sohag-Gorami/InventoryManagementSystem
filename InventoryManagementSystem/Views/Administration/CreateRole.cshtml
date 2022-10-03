@@ -1,0 +1,22 @@
+﻿@model CreateRoleViewModel
+
+<form asp-action="SignUp" style="border:1px solid #ccc" enctype="multipart/form-data">
+  <div class="container">
+    <h1>Create New Role </h1>
+    <hr>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <br />
+
+    <label asp-for="RoleName"> </label>
+    <br />
+    <input asp-for="RoleName">
+    <span asp-validation-for="RoleName"></span>
+    <br />
+
+    <div class="clearfix">
+      <button type="submit" class="signupbtn" asp-controller="Administration">Create Role</button>
+      <button  class="signupbtn"> <a asp-action="ListRoles" asp-controller="Administration">Go to User List</a> </buttton>
+    </div>
+   
+  </div>
+</form>

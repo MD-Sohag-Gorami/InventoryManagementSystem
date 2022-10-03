@@ -26,41 +26,41 @@ namespace InventoryManagementSystem.Controllers
         [Route("signup")]
 
         [HttpPost]
-        public async Task <IActionResult> SignUp(SignUpUserModel userModel)
+        public async Task<IActionResult> SignUp(SignUpUserModel userModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
 
                 var result = await _accountService.CreateUserAsync(userModel);
-                
+
                 if (result.Succeeded)
                 {
-         
-                    return RedirectToAction ("LogIn","Account");
+
+                    return RedirectToAction("LogIn", "Account");
                 }
 
                 ModelState.AddModelError("", "Invalid login credendial ");
-                
+
             }
             return View(userModel);
 
         }
-       
+
 
         [Route("login")]
         public IActionResult LogIn()
         {
-            return View();  
+            return View();
         }
 
         [Route("login")]
         [HttpPost]
         public async Task<IActionResult> LogIn(SignInModel signInModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var resutl = await _accountService.PasswordSignInAsyn(signInModel);
-                if(resutl.Succeeded)
+                if (resutl.Succeeded)
                 {
                     return RedirectToAction("Index", "Product");
                 }
@@ -70,7 +70,7 @@ namespace InventoryManagementSystem.Controllers
 
             return View(signInModel);
         }
-       
+
 
 
         [Route("logout")]
@@ -78,8 +78,40 @@ namespace InventoryManagementSystem.Controllers
         public async Task<IActionResult> LogOut()
         {
             await _accountService.SignOutAsync();
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
+
+        [Route("change-password")]
+        public IActionResult ChangePassword()
+        {
+
+            return View();
+        }
+
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel passwordModel)
+        {
+            if(ModelState.IsValid)
+            {
+                var result =await _accountService.ChangePasswordAsync(passwordModel);
+                if(result.Succeeded)
+                {
+                    ViewBag.IsSuccess = true;
+                    ModelState.Clear();
+                    return View();
+                }
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+
+            }
+
+            return View(passwordModel);
+        }
+
+
 
     }
 #endregion

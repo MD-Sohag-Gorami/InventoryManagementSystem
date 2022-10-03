@@ -29,9 +29,13 @@
                     <div>
                         <a asp-area="" asp-controller="" asp-action=""> @User.Identity.Name </a>
                     </div>
-                    <div>
-                        <a asp-controller="" asp-action="">Roles</a>
-                    </div>
+                    @if(_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                         <div>
+                            <a asp-controller="Administration" asp-action="ListRoles">Roles</a>
+                          </div>
+                    }
+                   
 
                     <div>
                         @*<form method="post" asp-controller="Account" asp-action="Logout">
@@ -40,6 +44,7 @@
 
                         </form>*@
                         <a asp-area="" asp-controller="Account" asp-action="LogOut">Logout</a>
+                        @*<a asp-area="" asp-controller="Account" asp-action="ChangePassword">PasswordChange</a>*@
                     </div>
 
                     

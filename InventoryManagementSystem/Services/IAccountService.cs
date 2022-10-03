@@ -8,5 +8,6 @@ namespace InventoryManagementSystem.Services
         Task <IdentityResult> CreateUserAsync(SignUpUserModel userModel);
         Task<SignInResult> PasswordSignInAsyn(SignInModel signInModel);
         Task SignOutAsync();
+        Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel passwordModel);
     }
 }

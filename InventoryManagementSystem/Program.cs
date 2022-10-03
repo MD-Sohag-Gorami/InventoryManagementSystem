@@ -30,6 +30,8 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IWareHouseService, WareHouseService>();
 builder.Services.AddScoped<IProductModelFactory, ProductModelFactory>();
 builder.Services.AddScoped<IWarehouseModelFactory, WarehouseModelFactory>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped< IAdministrationService, AdministrationService>();
 
 var app = builder.Build();
 
@@ -44,8 +46,6 @@ app.UseAuthentication();
 app.UseRouting();
 
 app.UseAuthorization();
-
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
