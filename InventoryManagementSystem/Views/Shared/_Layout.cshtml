@@ -12,22 +12,18 @@
 </head>
 <body>
     <header>
-        <div class="topnav">
+       <div class="topnav">
         
-           
                 <div>
                      <a class="active" asp-area="" asp-controller="Home" asp-action="Index">InventoryManagementSystem</a>
                 </div>
                 @if (_signInManager.IsSignedIn(User))
                 {
                     <div>
-                        <a asp-area="" asp-controller="Product" asp-action="Index">All Product</a>
+                        <a asp-area="" asp-controller="Product" asp-action="Index">Products</a>
                     </div>
                     <div>
-                        <a asp-area="" asp-controller="Product" asp-action="AddProduct">Add Product</a>
-                    </div>
-                    <div>
-                        <a asp-area="" asp-controller="" asp-action=""> @User.Identity.Name </a>
+                        <a asp-area="" asp-controller="Account" asp-action="UserLogin"> @User.Identity.Name </a>
                     </div>
                     @if(_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
@@ -35,27 +31,18 @@
                             <a asp-controller="Administration" asp-action="ListRoles">Roles</a>
                           </div>
                     }
-                   
-
-                    <div>
-                        @*<form method="post" asp-controller="Account" asp-action="Logout">
-
-                            <button type="submit"> Logout </button> 
-
-                        </form>*@
+                    
+                   @*<div>
+             
                         <a asp-area="" asp-controller="Account" asp-action="LogOut">Logout</a>
                         @*<a asp-area="" asp-controller="Account" asp-action="ChangePassword">PasswordChange</a>*@
-                    </div>
+                  @* </div>*@
 
-                    
-                     <div>
-                    <a asp-controller="WareHouse" asp-action="AddWareHouse">Add WareHouse</a>
-                    </div>
                     <div>
-                        <a asp-controller="WareHouse" asp-action="Index">All WareHouse</a>
+                    <a asp-controller="WareHouse" asp-action="Index">WareHouses</a>
                     </div>
-
-                }
+              }
+                
                 else
                 {
                     <div>
@@ -64,13 +51,11 @@
                     <div>
                         <a asp-area="" asp-controller="Account" asp-action="LogIn">Login</a>
                     </div>
-
-                }
-                
-               
+                }         
         </div>
-        
-    </header>
+     
+
+    </header> 
 
     <div class="container">
         <main role="main" class="pb-3">

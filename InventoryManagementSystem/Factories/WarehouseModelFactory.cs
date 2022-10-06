@@ -6,16 +6,16 @@ namespace InventoryManagementSystem.Factories
 {
     public class WarehouseModelFactory : IWarehouseModelFactory
     {
-        private readonly IProductService _iproducService;
+        private readonly IProductService _productService;
         private readonly IWareHouseService _wareHouseService;
 
-        public WarehouseModelFactory(IProductService iproducService,
+        public WarehouseModelFactory(IProductService productService,
                                     IWareHouseService wareHouseService)
         {
-            _iproducService = iproducService;
+            _productService = productService;
             _wareHouseService = wareHouseService;
         }
-        private async Task<WareHouseViewModel> CreateWareHoueAsync(WareHouseModel model)
+        private async Task<WareHouseViewModel> PrepareWareHoueByModelAsync(WareHouseModel model)
         {
             string byteImage = null;
             string byteImageData = null;
@@ -32,18 +32,30 @@ namespace InventoryManagementSystem.Factories
                 ImgByte = null,
                 Name = model.Name,
                 Location = model.Location,
+                ProductList = model.ProductList.Select(m => new ProductViewModel()
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    PurchasePrice = m.PurchasePrice,
+                    SellPrice = m.SellPrice,
+                    CreateDateOn = m.CreateDateOn,
+                    ProductQnty = m.ProductQnty,
+                    ImageUrl = m.ImageUrl,
+
+
+                }).ToList(),
 
             };
             return ViewModel;
         }
-        public async Task<List<WareHouseViewModel>> PrepareAllWareHoueAsync()
+        public async Task<List<WareHouseViewModel>> PrepareAllWareHoueAsync(string warehouseSearch = "")
         {
-            var model = await _wareHouseService.GetAllWareHouseAsync();
+            var model = await _wareHouseService.GetAllWareHouseAsync(warehouseSearch);
 
             List<WareHouseViewModel> wareHouses = new List<WareHouseViewModel>();
             foreach (var item in model)
             {
-                var createView = await CreateWareHoueAsync(item);
+                var createView = await PrepareWareHoueByModelAsync(item);
                 wareHouses.Add(createView);
             }
 
@@ -52,8 +64,9 @@ namespace InventoryManagementSystem.Factories
         public async Task<WareHouseViewModel> PrepareWareHouseByIdAsync(int id)
         {
             var model = await _wareHouseService.GetWareHouseByIdAsync(id);
+            model.ProductList = await _productService.GetAllProductsAsync(warehouseId: id);
 
-            var createView = await CreateWareHoueAsync(model);
+            var createView = await PrepareWareHoueByModelAsync(model);
 
             return createView;
         }

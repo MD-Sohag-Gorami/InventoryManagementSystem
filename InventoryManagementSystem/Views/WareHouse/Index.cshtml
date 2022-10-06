@@ -15,6 +15,31 @@
 
 @*<button type="submit"><a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="AddProduct">Add Product</a></button>*@
 
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+       @*For Searching option*@
+       <br />
+      <form asp-controller="WareHouse" asp-action="Index">
+            <p>
+                <input type="search" placeholder="Enter Warehouse Name " name="warehouseSearch" style="widows:500px;"/>
+                <input type="submit" value="Search" class="btn-primary"/>
+            </p>
+  
+      </form>
+    </div>
+    <div class="col-sm">
+        <button>
+             <a asp-controller="WareHouse" asp-action="AddWareHouse" style="color: white; text-decoration:none;">
+			Add Warehouse
+	  </a>
+        </button>
+     
+    </div>
+   
+  </div>
+</div>
 <table class="ProductTable" styel="width:100%">
     <thead>
         <tr>
@@ -32,6 +57,9 @@
             </th>
             <th>
                Delete
+            </th>
+            <th>
+                Details
             </th>
         </tr>
     </thead>
@@ -53,6 +81,11 @@
                 </td>
                 <td >
                   <a asp-controller="WareHouse" asp-action="Delete" asp-route-id="@wareHouse.Id"> Delete </a>
+
+                </td>
+
+                  <td >
+                  <a asp-controller="WareHouse" asp-action="Detail" asp-route-id="@wareHouse.Id"> Details </a>
 
                 </td>
                 

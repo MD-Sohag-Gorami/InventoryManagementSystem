@@ -10,17 +10,19 @@ namespace InventoryManagementSystem.Services
         #region Ctor
         private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
-      
+        private readonly IWareHouseService _wareHouseService;
+
         public ProductService(ApplicationDbContext db,
-                              IWebHostEnvironment webHostEnvironment )
+                              IWebHostEnvironment webHostEnvironment,
+                              IWareHouseService wareHouseService)
         {
             _db = db;
             _webHostEnvironment = webHostEnvironment;
-          
+            _wareHouseService = wareHouseService;
         }
         #endregion
         #region Methods
-        public async Task<List<ProductModel>> GetAllProductsAsync(string productSearch = "")
+        public async Task<List<ProductModel>> GetAllProductsAsync(string productSearch = "", int warehouseId=0)
         {
             var products = _db.Product.ToList();
             if (products == null) return new List<ProductModel>();
@@ -28,6 +30,10 @@ namespace InventoryManagementSystem.Services
             if (!String.IsNullOrEmpty(productSearch))
             {
                 products = products.Where(product => product.Name.Contains(productSearch)).ToList();
+            }
+            if(warehouseId > 0)
+            {
+                products = products.Where(product => product.WareHouseId == warehouseId).ToList();
             }
 
             return products;
@@ -42,7 +48,30 @@ namespace InventoryManagementSystem.Services
             }
             return product;
         }
-      
+
+        public async Task<ProductViewModel> GetProductDetailByIdAsync(int id)
+        {
+            var product = await _db.Product.FindAsync(id);
+            if (product == null) return new ProductViewModel();
+            //var warehouse = await _db.WareHouse.FindAsync(product.WareHouseId);
+            var warehouse = await _wareHouseService.GetWareHouseByIdAsync(product.WareHouseId);
+            var ViewModel = new ProductViewModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                SellPrice = product.SellPrice,
+                ProductQnty = product.ProductQnty,
+                PurchasePrice = product.PurchasePrice,
+                WareHouseId = product.WareHouseId,
+                CreateDateOn = product.CreateDateOn,
+                ImageUrl = product.ImageUrl,
+                /*  WareHouseName = warehouse?.Name ?? string.Empty,*/
+                WareHouseName = warehouse?.Name,
+            };
+
+            return ViewModel;
+        }
         public async Task UpdateProductAsync(ProductViewModel viewModel)
         {
 

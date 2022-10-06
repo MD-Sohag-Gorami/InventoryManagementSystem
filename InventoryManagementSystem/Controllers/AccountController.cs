@@ -111,6 +111,11 @@ namespace InventoryManagementSystem.Controllers
             return View(passwordModel);
         }
 
+        public async Task<IActionResult> UserLogin()
+        {
+            return View();
+        }
+
 
 
     }

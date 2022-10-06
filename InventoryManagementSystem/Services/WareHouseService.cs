@@ -9,24 +9,34 @@ namespace InventoryManagementSystem.Services
     {
         private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
+   
         #region CTor
-        public WareHouseService(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
+        public WareHouseService(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment
+                                 )
         {
             _db = db;
             _webHostEnvironment = webHostEnvironment;
+          
         }
         #endregion
         #region Methods
-        public async Task<List<WareHouseModel>> GetAllWareHouseAsync()
+        public async Task<List<WareHouseModel>> GetAllWareHouseAsync(string warehouseSearch="")
         {
-            var model = await _db.WareHouse.ToListAsync();
-            if (model == null) return new List<WareHouseModel> ();
-            return model;
+            var warehouses = await _db.WareHouse.ToListAsync();
+            if (warehouses == null) return new List<WareHouseModel> ();
+
+            if (!String.IsNullOrEmpty(warehouseSearch))
+            {
+                warehouses = warehouses.Where(warehouse => warehouse.Name.Contains(warehouseSearch)).ToList();
+            }
+            return warehouses;
         }
         public async Task<WareHouseModel> GetWareHouseByIdAsync(int? id)
         {
             var model = await _db.WareHouse.FindAsync(id);
+
             if (model == null) return new WareHouseModel();
+
             return model;
         }
         public async Task UpdateWareHouseAsync(WareHouseViewModel viewModel)
@@ -74,6 +84,31 @@ namespace InventoryManagementSystem.Services
             await _db.SaveChangesAsync();
 
         }
+
+       /* public async Task<WareHouseViewModel> GetWareHouseDetailByIdAsync(int id)
+        {
+            var model = await _db.WareHouse.FindAsync(id);
+            if (model == null) return new WareHouseViewModel();
+
+            model.ProductList = await _productService.GetAllProductsAsync(warehouseId: id);
+           
+            var ViewModel = new WareHouseViewModel()
+            {
+               Id = id,
+               Name = model.Name,
+               Location = model.Location,
+                ProductList = model.ProductList.Select(m => new ProductViewModel()
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+
+
+                }).ToList(),
+
+            };
+         
+            return ViewModel;
+        }*/
         #endregion
 
     }

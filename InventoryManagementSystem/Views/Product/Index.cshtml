@@ -24,14 +24,31 @@
         
 </form>*@
 
-@*For Searching option*@
-<form asp-controller="Product" asp-action="Index">
-    <p>
-        <input type="search" placeholder="Enter Product Name " name="ProductSearch" style="widows:500px;"/>
-        <input type="submit" value="Search" class="btn-primary"/>
-    </p>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+       @*For Searching option*@
+       <br />
+      <form asp-controller="Product" asp-action="Index">
+            <p>
+                <input type="search" placeholder="Enter Product Name " name="ProductSearch" style="widows:500px;"/>
+                <input type="submit" value="Search" class="btn-primary"/>
+            </p>
   
-</form>
+      </form>
+    </div>
+    <div class="col-sm">
+        <button >
+             <a asp-controller="Product" asp-action="AddProduct" style="color: white; text-decoration:none;">
+			   AddProduct
+	         </a>
+        </button>
+     
+    </div>
+   
+  </div>
+</div>
 
 
 

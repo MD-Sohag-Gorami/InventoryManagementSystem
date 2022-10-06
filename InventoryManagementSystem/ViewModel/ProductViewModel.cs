@@ -38,6 +38,7 @@ namespace InventoryManagementSystem.ViewModel
         [Display(Name = "Please set product create date time : ")]
         public DateTime CreateDateOn { get; set; }
         public int WareHouseId { get; set; }
+        public string? WareHouseName { get; set; }
         public IList<SelectListItem> AvaiableWarehouse { get; set; }
     }
 }

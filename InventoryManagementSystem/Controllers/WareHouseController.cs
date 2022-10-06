@@ -1,6 +1,7 @@
 ﻿using InventoryManagementSystem.Factories;
 using InventoryManagementSystem.Services;
 using InventoryManagementSystem.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagementSystem.Controllers
@@ -19,9 +20,9 @@ namespace InventoryManagementSystem.Controllers
         }
         #endregion
         #region Methods
-        public async Task<IActionResult> Index(int pg = 1)
+        public async Task<IActionResult> Index(int pg = 1 , string warehouseSearch="")
         {
-            var wareHouses = await _warehouseModelFactory.PrepareAllWareHoueAsync();
+            var wareHouses = await _warehouseModelFactory.PrepareAllWareHoueAsync(warehouseSearch);
             const int pageSize = 2;
             if (pg < 1) pg = 1;
             int recsCount = wareHouses.Count;
@@ -32,7 +33,7 @@ namespace InventoryManagementSystem.Controllers
 
             return View(data);
         }
-
+        [Authorize(Roles ="Manager")]
         [HttpGet]
         public async Task<IActionResult> AddWareHouse()
         {
@@ -52,12 +53,13 @@ namespace InventoryManagementSystem.Controllers
             }
             return View(wareHouseViewModel);
         }
-
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id )
         {
             if (id == 0 || id == null) return NotFound();
             var wareHouse = await _warehouseModelFactory.PrepareWareHouseByIdAsync(id.Value);
+
             if (wareHouse == null) return NotFound();
             return View(wareHouse);
         }
@@ -72,6 +74,8 @@ namespace InventoryManagementSystem.Controllers
             }
             return View(viewModel);
         }
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if(id == 0 || id == null) return NotFound();
@@ -79,6 +83,20 @@ namespace InventoryManagementSystem.Controllers
 
             return RedirectToAction("Index");
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Detail(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var detailWarehouse = await _warehouseModelFactory.PrepareWareHouseByIdAsync(id.Value);
+
+            if (detailWarehouse == null) return NotFound();
+
+            return View(detailWarehouse);
         }
 
 

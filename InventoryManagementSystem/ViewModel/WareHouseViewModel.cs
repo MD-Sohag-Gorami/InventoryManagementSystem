@@ -5,6 +5,10 @@ namespace InventoryManagementSystem.ViewModel
 {
     public class WareHouseViewModel
     {
+        public WareHouseViewModel()
+        {
+            ProductList = new List<ProductViewModel>();
+        }
         [Key]
         public int Id { get; set; }
         [DisplayName("Please Enter WareHouse Name : ")]
@@ -18,6 +22,8 @@ namespace InventoryManagementSystem.ViewModel
         public IFormFile? ImgByte { get; set; }
         public string? ImgByteUrl { get; set; }
 
-       
+        public List<ProductViewModel> ProductList { get; set; }
+
+
     }
 }

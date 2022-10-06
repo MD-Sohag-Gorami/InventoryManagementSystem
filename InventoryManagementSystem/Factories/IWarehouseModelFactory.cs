@@ -5,7 +5,7 @@ namespace InventoryManagementSystem.Factories
 {
     public interface IWarehouseModelFactory
     {
-        Task<List<WareHouseViewModel>> PrepareAllWareHoueAsync();
+        Task<List<WareHouseViewModel>> PrepareAllWareHoueAsync(string warehouseSearch = "");
         Task<WareHouseViewModel> PrepareWareHouseByIdAsync(int id);
 
        

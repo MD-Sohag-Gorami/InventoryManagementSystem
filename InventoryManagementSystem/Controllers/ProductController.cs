@@ -3,6 +3,7 @@ using InventoryManagementSystem.Factories;
 using InventoryManagementSystem.Models;
 using InventoryManagementSystem.Services;
 using InventoryManagementSystem.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagementSystem.Controllers
@@ -40,6 +41,7 @@ namespace InventoryManagementSystem.Controllers
            // return View(products);
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpGet]
         public async Task<IActionResult> AddProduct()
         {
@@ -58,6 +60,7 @@ namespace InventoryManagementSystem.Controllers
 
             return View(productViewModel);
         }
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -92,7 +95,7 @@ namespace InventoryManagementSystem.Controllers
              _db.SaveChanges();
              return RedirectToAction("Index");
          }*/
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0)
@@ -110,7 +113,7 @@ namespace InventoryManagementSystem.Controllers
             {
                 return NotFound();
             }
-            var detailProduct = await _productService.GetProductByIdAsync(id.Value);
+            var detailProduct = await _productService.GetProductDetailByIdAsync(id.Value);
 
             if (detailProduct == null) return NotFound();
 
