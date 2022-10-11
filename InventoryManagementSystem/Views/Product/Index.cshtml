@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProductViewModel>  
+﻿@model IEnumerable<ProductViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,11 +6,14 @@
     //this portion for pagination
     Pager pager = new Pager();
     int pageNo = 0;
-    if(ViewBag.Pager !=null)
+    if (ViewBag.Pager != null)
     {
         pager = ViewBag.Pager;
         pageNo = pager.CurrentPage;
     }
+
+    var warehouseList = ViewBag.AvailableWarehouse;
+
 }
 
 @*<button type="submit"><a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="AddProduct">Add Product</a></button>*@
@@ -19,35 +22,61 @@
 @* <form asp-controller="Product" asp-action="Index">
         <p>
             <input type="text" name="productSearch"/>
-            <button type="submit" >Submit</button> 
+            <button type="submit" >Submit</button>
         </p>
-        
+
 </form>*@
 
 
 <div class="container">
-  <div class="row">
-    <div class="col-sm">
-       @*For Searching option*@
-       <br />
-      <form asp-controller="Product" asp-action="Index">
-            <p>
-                <input type="search" placeholder="Enter Product Name " name="ProductSearch" style="widows:500px;"/>
-                <input type="submit" value="Search" class="btn-primary"/>
-            </p>
-  
-      </form>
+    <div class="row">
+        <div class="col-sm">
+            @*For Searching for product*@
+            <form asp-controller="Product" asp-action="Index">
+                <p>
+                    <label for="productSearch"> Product Name: </label>
+                    <input type="search" placeholder="Enter Product Name " name="ProductSearch" style="widows:300px;" />
+
+                </p>
+                <p>
+                    <label for="warehouseId">Choose a Warehouse:</label>
+
+                    @if (warehouseList != null)
+                    {
+                        <select name="warehouseId">
+                            <option value="">All</option>
+                            @for (int i = 0; i < warehouseList.Count; i++)
+                            {
+                                <option value="@warehouseList[i].Value">@warehouseList[i].Text</option>
+                            }
+
+                        </select>
+
+                    }
+
+                </p>
+
+                <p>
+                    <label for="dateWiseProductSearch"> Product Date : </label>
+                    <input type="date" placeholder="Enter Date : MM/DD/YYYY" name="dateWiseProductSearch" style="widows:300px;" />
+
+                </p>
+                <p>
+                    <input type="submit" value="Search" class="btn-primary" />
+                </p>
+            </form>
+        </div>
+        <br />
+        <br />
+        <div class="col-sm">
+            <button>
+                <a asp-controller="Product" asp-action="AddProduct"  style="color: white; text-decoration:none;">
+                    AddProduct
+                </a>
+            </button>
+        </div>
+
     </div>
-    <div class="col-sm">
-        <button >
-             <a asp-controller="Product" asp-action="AddProduct" style="color: white; text-decoration:none;">
-			   AddProduct
-	         </a>
-        </button>
-     
-    </div>
-   
-  </div>
 </div>
 
 
@@ -59,19 +88,19 @@
                 Product Name
             </th>
             <th>
-               PurchasePrice
+                PurchasePrice
             </th>
             <th>
                 SellPrice
             </th>
-             <th>
+            <th>
                 ProQnty
             </th>
             <th>
                 Edit
             </th>
             <th>
-               Delete
+                Delete
             </th>
             <th>
                 Details
@@ -79,7 +108,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var product in Model)
+        @foreach (var product in Model)
         {
             <tr>
                 <td width="20%">
@@ -94,20 +123,20 @@
                 <td width="15%">
                     @product.ProductQnty
                 </td>
-                 <td >
-                  <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id"> Edit </a>
+                <td>
+                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id"> Edit </a>
                 </td>
-                <td >
-                  <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id"> Delete </a>
+                <td>
+                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id"> Delete </a>
 
                 </td>
-                 <td >
-                  <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id"> Details </a>
+                <td>
+                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id"> Details </a>
                 </td>
             </tr>
-            }
+        }
     </tbody>
 </table>
 
-<partial name="_ProductPager" model="@pager"/>
+<partial name="_ProductPager" model="@pager" />
 

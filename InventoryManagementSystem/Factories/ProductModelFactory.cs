@@ -38,10 +38,9 @@ namespace InventoryManagementSystem.Factories
             return viewModel;
         }
 
-        public async Task< List<ProductViewModel> > PrepareAllProductsAsync(string productSearch="")
+        public async Task< List<ProductViewModel> > PrepareAllProductsAsync(string productSearch="", int warehouseSearch = 0, DateTime dateWiseProductSearch = new DateTime())
         {
-            var products = await _productService.GetAllProductsAsync(productSearch);
-
+            var products = await _productService.GetAllProductsAsync(productSearch, warehouseSearch, dateWiseProductSearch);
             List<ProductViewModel> productList = new List<ProductViewModel>();
 
             foreach (var product in products)

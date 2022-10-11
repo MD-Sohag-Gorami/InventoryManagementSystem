@@ -5,6 +5,7 @@ using InventoryManagementSystem.Services;
 using InventoryManagementSystem.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InventoryManagementSystem.Controllers
 {
@@ -13,20 +14,23 @@ namespace InventoryManagementSystem.Controllers
         #region Ctor
         private readonly IProductService _productService;
         private readonly IProductModelFactory _productModelFactory;
+        private readonly IWareHouseService _wareHouseService;
 
-       public ProductController(IProductService productService,
-                                 IProductModelFactory productModelFactory)
+        public ProductController(IProductService productService,
+                                 IProductModelFactory productModelFactory,
+                                 IWareHouseService wareHouseService)
         {
             _productService = productService;
             _productModelFactory = productModelFactory;
+            _wareHouseService = wareHouseService;
         }
         #endregion
 
         #region Methods
       
-        public async Task <IActionResult> Index(int pg = 1, string productSearch = "")
+        public async Task <IActionResult> Index(int pg = 1, string productSearch = "", int warehouseId=0,DateTime dateWiseProductSearch = new DateTime())
         {
-            var products = await _productModelFactory.PrepareAllProductsAsync(productSearch);
+            var products = await _productModelFactory.PrepareAllProductsAsync(productSearch, warehouseId, dateWiseProductSearch);
 
             const int pageSize = 5;
             if (pg < 1) pg = 1;
@@ -35,6 +39,20 @@ namespace InventoryManagementSystem.Controllers
             int recSkip = (pg - 1) * pageSize;
             var data = products.Skip(recSkip).Take(pager.PageSize).ToList();
             this.ViewBag.Pager = pager;
+
+            var warehouses = await _wareHouseService.GetAllWareHouseAsync();
+            var availableWarehouse = new List<SelectListItem>();
+
+            foreach (var warehouse in warehouses)
+            {
+                var item = new SelectListItem()
+                {
+                    Value = warehouse.Id.ToString(),
+                    Text = warehouse.Name,
+                };
+                availableWarehouse.Add(item);
+            }
+            ViewBag.AvailableWarehouse = availableWarehouse;
 
             return View(data); 
 

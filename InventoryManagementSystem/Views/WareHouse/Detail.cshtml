@@ -12,6 +12,9 @@
                 Product Name
             </th>
             <th>
+                ProductImg
+            </th>
+            <th>
                PurchasePrice
             </th>
             <th>
@@ -23,6 +26,7 @@
             <th>
                 Purchase Date
             </th>
+            
         </tr>
     </thead>
     <tbody>
@@ -32,7 +36,10 @@
                 <td width="20%">
                     @product.Name
                 </td>
-                <td width="20%">
+                <td width="15%">
+                    <img src="@product.ImageUrl" height="60" width="60">
+                </td>
+                <td width="15%">
                     @product.PurchasePrice
                 </td>
                 <td width="15%">
@@ -41,7 +48,7 @@
                 <td width="15%">
                     @product.ProductQnty
                 </td>
-                 <td width="15%">
+                 <td width="20%">
                     @product.CreateDateOn
                 </td>
               

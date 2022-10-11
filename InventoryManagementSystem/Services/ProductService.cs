@@ -22,7 +22,7 @@ namespace InventoryManagementSystem.Services
         }
         #endregion
         #region Methods
-        public async Task<List<ProductModel>> GetAllProductsAsync(string productSearch = "", int warehouseId=0)
+        public async Task<List<ProductModel>> GetAllProductsAsync(string productSearch = "", int warehouseId=0, DateTime dateWiseProductSearch = new DateTime())
         {
             var products = _db.Product.ToList();
             if (products == null) return new List<ProductModel>();
@@ -34,6 +34,12 @@ namespace InventoryManagementSystem.Services
             if(warehouseId > 0)
             {
                 products = products.Where(product => product.WareHouseId == warehouseId).ToList();
+            }
+            if(dateWiseProductSearch != new DateTime())
+            {
+                string check = dateWiseProductSearch.ToString("MM/dd/yyyy");
+
+                products = products.Where(product => product.CreateDateOn.ToString("MM/dd/yyyy").Equals(check)).ToList();
             }
 
             return products;
@@ -105,15 +111,19 @@ namespace InventoryManagementSystem.Services
         public async Task DeleteProductAsync(int id)
         {
             var product =  await GetProductByIdAsync(id);
-
             var filePath = product.ImageUrl;
-            filePath = filePath.Substring(1);
-            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, filePath);
-            if (File.Exists(serverFolder))
-            {
-                File.Delete(serverFolder);
-            }
 
+            if (product.ImageUrl !=null)
+            {
+                filePath = filePath.Substring(1);
+                string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, filePath);
+                if (File.Exists(serverFolder))
+                {
+                    File.Delete(serverFolder);
+                }
+               
+            }
+           
             _db.Product.Remove(product);
             await _db.SaveChangesAsync();
         }
@@ -135,7 +145,7 @@ namespace InventoryManagementSystem.Services
                 string image = "Images/ProImage/";
                 image += Guid.NewGuid().ToString() + " - " + viewModel.Image.FileName;
 
-                viewModel.ImageUrl = "/" + image;
+                productModel.ImageUrl = "/" + image;
               
                 string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, image);
 
