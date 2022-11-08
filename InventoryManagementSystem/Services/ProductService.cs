@@ -11,7 +11,6 @@ namespace InventoryManagementSystem.Services
         private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IWareHouseService _wareHouseService;
-
         public ProductService(ApplicationDbContext db,
                               IWebHostEnvironment webHostEnvironment,
                               IWareHouseService wareHouseService)
@@ -43,7 +42,7 @@ namespace InventoryManagementSystem.Services
             }
 
             return products;
-        }
+        } 
         public async Task<ProductModel> GetProductByIdAsync(int id)
         {
             var product = await _db.Product.FindAsync(id);

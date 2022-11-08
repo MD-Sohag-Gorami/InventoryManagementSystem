@@ -47,9 +47,7 @@ namespace InventoryManagementSystem.Controllers
             if (id == null) return NotFound();
             await _administrationService.DeleteRoleByIdAsync(id);
            
-             return RedirectToAction("ListRoles", "Administration");
-            
-            
+             return RedirectToAction("ListRoles", "Administration"); 
         }
         [HttpGet]
         public async Task<IActionResult> ManageUserRole(string userId)
