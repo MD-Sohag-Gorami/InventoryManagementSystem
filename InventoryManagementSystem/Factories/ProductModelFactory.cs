@@ -66,6 +66,35 @@ namespace InventoryManagementSystem.Factories
 
 
         }
+
+        public async Task<List<ProductViewModel>> PrepareTopProductsAsync(int count)
+        {
+            var products = await _productService.GetAllProductsAsync();
+            List<ProductViewModel> productList = new List<ProductViewModel>();
+
+            foreach (var product in products)
+            {
+
+                ProductViewModel ViewModel = new ProductViewModel()
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    SellPrice = product.SellPrice,
+                    ProductQnty = product.ProductQnty,
+                    PurchasePrice = product.PurchasePrice,
+                    WareHouseId = product.WareHouseId,
+                    CreateDateOn = product.CreateDateOn,
+                    ImageUrl = product.ImageUrl,
+                };
+                productList.Add(ViewModel);
+            }
+
+            if (productList == null) return new List<ProductViewModel>();
+            return productList;
+
+
+        }
         public async Task<ProductViewModel> PrepareProductByIdAsync(int id)
         {
             var product = await _productService.GetProductByIdAsync(id);

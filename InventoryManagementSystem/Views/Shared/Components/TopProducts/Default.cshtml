@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ProductViewModel>
+
+<table class="ProductTable" styel="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Product Name
+            </th>
+            <th>
+                PurchasePrice
+            </th>
+            <th>
+                SellPrice
+            </th>
+            <th>
+                ProQnty
+            </th>
+            <th>
+                Edit
+            </th>
+            <th>
+                Delete
+            </th>
+            <th>
+                Details
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td width="20%">
+                    @product.Name
+                </td>
+                <td width="20%">
+                    @product.PurchasePrice
+                </td>
+                <td width="15%">
+                    @product.SellPrice
+                </td>
+                <td width="15%">
+                    @product.ProductQnty
+                </td>
+                <td>
+                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id"> Edit </a>
+                </td>
+                <td>
+                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id"> Delete </a>
+
+                </td>
+                <td>
+                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id"> Details </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

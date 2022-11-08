@@ -11,7 +11,8 @@ namespace InventoryManagementSystem.Services
         Task<ProductViewModel> GetProductDetailByIdAsync(int id);
         Task UpdateProductAsync(ProductViewModel viewModel);
         Task InsertProductAsync(ProductViewModel viewModel);
-    /*    Task<List<ProductModel>> GetSearchProductAsync(string ProductSearch);*/
+        /*    Task<List<ProductModel>> GetSearchProductAsync(string ProductSearch);*/
+        Task<List<ProductViewModel>> GetTopProductsAsync(int count);
 
 
     }

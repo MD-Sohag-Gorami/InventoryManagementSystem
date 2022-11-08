@@ -11,11 +11,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefalutConnection")));
-
-
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
-
-
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequiredLength = 4;
@@ -32,7 +28,6 @@ builder.Services.AddScoped<IProductModelFactory, ProductModelFactory>();
 builder.Services.AddScoped<IWarehouseModelFactory, WarehouseModelFactory>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped< IAdministrationService, AdministrationService>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -154,6 +154,27 @@ namespace InventoryManagementSystem.Services
             await _db.SaveChangesAsync();
         }
 
+        public async Task<List<ProductViewModel>> GetTopProductsAsync(int count)
+        {
+            
+            var products =  _db.Product.Select(product => new ProductViewModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                SellPrice = product.SellPrice,
+                ProductQnty = product.ProductQnty,
+                PurchasePrice = product.PurchasePrice,
+                WareHouseId = product.WareHouseId,
+                CreateDateOn = product.CreateDateOn,
+                ImageUrl = product.ImageUrl,
+                
+
+
+            }).Take(count).ToList();
+            return products;
+        }
+
         #endregion
 
 
